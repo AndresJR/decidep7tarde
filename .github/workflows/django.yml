@@ -46,4 +46,18 @@ jobs:
       uses: codacy/codacy-coverage-reporter-action@v1
       with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: decide/coverage.xml 
+          coverage-reports: decide/coverage.xml
+  deploy:
+    if: ${{github.ref == 'refs/heads/deploy' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: 47ng/actions-clever-cloud@v1.3.1
+        with:
+          appID: app_d32973d1-4ca4-42cc-ae69-168117b066ea
+        env:
+          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+
